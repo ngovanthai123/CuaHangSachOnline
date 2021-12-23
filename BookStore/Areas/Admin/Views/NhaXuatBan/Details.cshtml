@@ -1,0 +1,22 @@
+﻿@model BookStore.Models.NhaXuatBan
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>THÔNG TIN CHI TIẾT</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenNhaXuatBan)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenNhaXuatBan)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-danger " asp-action="Edit" asp-route-id="@Model.Id">Cập nhật</a>
+    <a asp-action="Index">Danh sách sản phẩm</a>
+</div>

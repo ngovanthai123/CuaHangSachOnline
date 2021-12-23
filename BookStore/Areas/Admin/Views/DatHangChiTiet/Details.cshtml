@@ -1,0 +1,40 @@
+﻿@model BookStore.Models.DatHangChiTiet
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4 style="padding-top:10px">THÔNG TIN CHI TIẾT</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SoLuong)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DonGia)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DonGia)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DatHang)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatHang.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sach)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sach.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-danger " asp-action="Edit" asp-route-id="@Model.Id">Cập nhật</a>
+    <a asp-action="Index">Danh sách sản phẩm</a>
+</div>

@@ -1,0 +1,27 @@
+﻿@model BookStore.Models.NhaXuatBan
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TenNhaXuatBan" class="control-label"></label>
+                <input asp-for="TenNhaXuatBan" class="form-control" />
+                <span asp-validation-for="TenNhaXuatBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm" class="btn btn-danger" style="font-weight:bold" />   <a asp-action="Index">Quay về danh sách</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

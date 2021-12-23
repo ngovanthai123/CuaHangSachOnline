@@ -1,0 +1,68 @@
+﻿ @model List<BookStore.Models.CartItem>
+
+    <header class="ex-header bg-dark-blue"></header> <!-- end of ex-header -->
+    <br />
+    <h2 style="color:black; font-weight:bold; font-family:cursive; margin-bottom:10px;text-align:center">Giỏ hàng của bạn</h2>
+    @if (Model.Count > 0)
+    {
+        int num = 1;        // số thứ tự
+        int amount = 0;     // thành tiền
+        int total = 0;      // tổng tiền
+
+        <table class="table" style="width: 90%; margin-left: 85px;">
+            <tr>
+                <th>STT</th>
+                <th>Hình ảnh</th>
+                <th style="width:500px">Sản phẩm</th>
+                <th>Giá</th>
+                <th >Số lượng</th>
+                <th>Thành tiền</th>
+                <th></th>
+            </tr>
+            @foreach (var i in Model)
+            {
+                amount = i.Sach.DonGia * i.Quantity - (i.Sach.DonGia * i.Quantity * 10 / 100);
+                total += amount;
+                <tr class="align-middle">
+                    <td>@(num++)</td>
+                    <td>
+                        <img src="~/images/@(i.Sach.HinhAnhBia)" class="img-thumbnail" width="50" />
+                    
+                    </td>
+                    <td>@(i.Sach.TenSach)</td>
+                    <td>@((i.Sach.DonGia-i.Sach.DonGia*10/100).ToString("n0"))</td>
+                    <td>
+                        <form asp-action="UpdateCart" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <input name="id" type="hidden" asp-for="@(i.Sach.Id)" />
+                                    <input name="quantity" type="number" asp-for="@(i.Quantity)" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <input class="btn btn-warning" type="submit" value="Cập nhật" />
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                    <td>@(amount.ToString("n0"))</td>
+                    <td><a asp-action="RemoveItem" asp-route-id="@i.Sach.Id" class="text-danger"><i class="fa fa-trash"></i></a></td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4" class="text-end">Tổng tiền</td>
+                <td colspan="2"><strong class="text-danger">@(total.ToString("n0"))</strong></td>
+            </tr>
+        </table>
+        <div class="text-end" style="padding-bottom: 20px; margin-left: 180px;">
+            <a class="btn btn-info" asp-action="CheckOut">Thanh toán</a>
+        </div>
+
+
+    }
+    else
+    {
+        <p class="alert alert-danger">Giỏ hàng rỗng!</p>
+    }
+    <div class="text-end" style="padding-bottom: 20px; margin-left: 1300px;">
+        <a class="btn btn-info" asp-controller="SanPham" asp-action="Index" style="text-decoration:none">Mua tiếp</a>
+    </div>

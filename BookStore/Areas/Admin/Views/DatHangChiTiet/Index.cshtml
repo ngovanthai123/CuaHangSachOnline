@@ -1,0 +1,116 @@
+﻿@model IEnumerable<BookStore.Models.DatHangChiTiet>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="shadow">
+
+    <h1 class="text-center" style="color: #3150a2; font-size: 35px">Books Store</h1>
+    <h2 class="text-center" style="color: #3150a2; font-size: 16px;">Địa chỉ: 433/4 Đông thịnh 3, đường Thoại Ngọc Hầu, TP Long Xuyên, An Giang</h2>
+    <h1 class="text-center" style="color: #3150a2;font-size: 27px">Hóa đơn thanh toán</h1>
+    @using Microsoft.AspNetCore.Http
+    @{var donhang = (DatHang)ViewBag.pigg;}
+
+    <h2 class="text-center" style="color: #3150a2; font-size: 16px;">Mã đơn hàng: @donhang.Id </h2>
+    <h2 class="" style="color: #3150a2; font-size: 16px; margin-left: 20px;">Ngày: @(donhang.NgayDatHang) </h2>
+    <h2 class="" style="color: #3150a2; font-size: 16px; margin-left: 20px;">Khách hàng: @(donhang.KhachHang.HoVaTen)</h2>
+    <h2 class="" style="color: #3150a2; font-size: 16px; margin-left: 20px;">Người lập: @Context.Session.GetString("_Hoten")</h2>
+
+    <table class="table  bg-white text-center shadow">
+        <thead>
+
+            <tr>
+                <th>
+                    STT
+                </th>
+
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Sach.TenSach)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoLuong)
+                </th>
+                <th>
+                    Đơn giá
+                </th>
+                <th>
+                    Thành tiền
+                </th>
+
+                <th></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @{ var stt = 1;
+                var tongtien = 0;
+                var tongsl = 0;}
+            @foreach (var item in Model)//in ra chu
+            {
+                tongtien = item.Sach.DonGia * item.SoLuong - (item.Sach.DonGia * item.SoLuong * 10 / 100);//xu ly code k in ra
+                tongsl += item.SoLuong;
+                <tr>
+
+                    <td>
+                        @(stt++)
+                    </td>
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sach.TenSach)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoLuong)
+                    </td>
+                    <td>
+                        @String.Format("{0:N0}", item.DonGia - (item.DonGia * 10 / 100)) VNĐ
+                    <td>
+
+                        @String.Format("{0:N0}", item.DonGia - (item.DonGia * 10 / 100)) VNĐ
+                    </td>
+
+
+                    <td>
+
+
+
+                        <a asp-action="Edit" asp-route-id="@item.Id" style="color: #8809e8 ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square w-25" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.Id" style="color: #8809e8 "><i class="fa fa-eye"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" style="color: #8809e8 ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash " viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                            </svg>
+                        </a>
+
+
+                    </td>
+                </tr>
+
+
+
+            }
+
+        </tbody>
+        <tr class="table table-borderless">
+
+            <td colspan="1" style="border: none;text-align:left ">Tổng sản phẩm: </td>
+
+            <td colspan="2" style=" text-align: left;font-weight:bold ">@tongsl </td>
+        </tr>
+        <tr class="table table-borderless">
+
+            <td colspan="1" style="border: none; text-align: left; ">Tổng tiền: </td>
+
+            <td colspan="8" style=" text-align: left; font-weight: bold; ">@tongtien.ToString("N0")VND</td>
+        </tr>
+    </table>
+    <h2 class="text-center" style="color: #3150a2; font-size: 16px;">Xin cảm ơn quí khách và hẹn gặp lại!</h2>
+    <h2 class="text-center" style="color: #3150a2; font-size: 16px;">Quý khách vui lòng giữ hóa đơn, hàng được phép đổi trả trong 3 ngày (Điều kiện đủ tem mác nguyên vẹn sản phẩm)</h2>
+</div>

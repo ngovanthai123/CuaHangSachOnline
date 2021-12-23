@@ -1,0 +1,47 @@
+﻿@model IEnumerable<BookStore.Models.LoaiSach>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 style="padding-top: 30px; text-align: center;">BẢNG LOẠI SÁCH</h1>
+<div class="table-responsive">
+
+    <p>
+        <a asp-action="Create" class="btn btn-danger" style="font-weight:bold"><i class="fa-plus-square"></i>Thêm mới</a>
+    </p>
+
+    <table id="example1" class="table table-bordered table-striped">
+        <thead>
+            <tr style="text-align:center;background-color:cornflowerblue">
+                <th>
+                    @Html.DisplayNameFor(model => model.TenLoai)
+                </th>
+                <th style="text-align:center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenLoai)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id"style="color: #8809e8 "><i class="fa fa-edit"></i></a> |
+                        <a asp-action="Details" asp-route-id="@item.Id"style="color: #8809e8 "><i class="fa fa-eye"></i></a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id"style="color: #8809e8 "><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr style="text-align:center;background-color:cornflowerblue">
+                <th>
+                    @Html.DisplayNameFor(model => model.TenLoai)
+                </th>
+                <th style="text-align:center">Thao tác</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<BookStore.Models.DonHangCuaToi>
+
+@{
+    ViewBag.Title = "Đơn hàng của tôi";
+}
+
+
+<header class="ex-header bg-dark-blue"></header> <!-- end of ex-header -->
+
+<div class="card mt-3">
+    <h5 class="card-header" style="color:black; text-align:center">
+        Đơn hàng của @Context.Session.GetString("_HoVaTen").ToString()
+    </h5>
+    <div class="card-body">
+        <table class="table table-bordered table-hover table-sm" style="text-align:center">
+            <tr style="text-align:center">
+                <th width="2%">STT</th>
+                <th>Hình ảnh</th>
+                <th style="width:30%; text-align:justify">Tên sách</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+                <th>Thời gian đặt hàng</th>
+                <th>Tinh trạng</th>
+            </tr>
+
+            @{int stt = 1;}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(stt++)</td>
+                    <td><img src="~/images/@item.HinhAnhBia" width="50" /></td>
+                    <td>@item.TenSach</td>
+                    <td>@item.SoLuong</td>
+                    <td class="card-text text-center">@String.Format("{0:N0}", item.DonGia - (item.DonGia * 10 / 100))VNĐ</td>
+                    <td class="text-right">@String.Format("{0:N0}", item.SoLuong * (item.DonGia - (item.DonGia * 10 / 100)))VNĐ</td>
+                    <td>@item.NgayDatHang</td>
+                    <td>
+                        @if (item.TinhTrang == 0)
+                        {
+                            <span>Đơn hàng mới</span>
+                        }
+                        else if (item.TinhTrang == 1)
+                        {
+                            <span>Đang xác nhận</span>
+                        }
+                        else if (item.TinhTrang == 2)
+                        {
+                            <span>Đã hủy</span>
+                        }
+                        else if (item.TinhTrang == 3)
+                        {
+                            <span>Đang đóng gói</span>
+                        }
+                        else if (item.TinhTrang == 4)
+                        {
+                            <span>Đang gởi vận chuyển</span>
+                        }
+                        else if (item.TinhTrang == 5)
+                        {
+                            <span>Đang chuyển</span>
+                        }
+                        else if (item.TinhTrang == 6)
+                        {
+                            <span>Thất bại</span>
+                        }
+                        else if (item.TinhTrang == 7)
+                        {
+                            <span>Đang chuyển hoàn</span>
+                        }
+                        else if (item.TinhTrang == 8)
+                        {
+                            <span>Đã chuyển hoàn</span>
+                        }
+                        else
+                        {
+                            <span>Thành công</span>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>
+
+

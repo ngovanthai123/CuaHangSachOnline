@@ -1,0 +1,127 @@
+﻿@model IEnumerable<BookStore.Models.Sach>
+
+
+@{
+    ViewData["Title"] = "Trang sản phẩm";
+}
+
+
+<body data-spy="scroll" data-target=".fixed-top"class="ex-header bg-dark-blue">
+    <header style="background-color:white">
+        <h3 style="font-weight: bold; color: black; text-align: center; font-family: cursive;">Văn Học - Nghệ Thuật</h3>
+        <div style="height: 50px; background-color: white; margin-bottom: 10px;">
+
+            <form asp-controller="VanHocNgheThuat" asp-action="Index" style="margin-top: 65px; float: left; margin-left: 90px">
+                <p style="color:black; font-family:cursive">
+                    Name: <input type="text" name="timkiem" style="height:40px; border-radius:100px; border:solid" />
+                    <input type="submit" value="Tìm Kiếm" style="border-radius: 50px; background-color: white; font-weight: bold; font-family: cursive;" />
+                </p>
+            </form>
+        </div>
+        <div class="container">
+            <div class="card-group product" style="margin-top: 75px">
+                <div class="card mt-3" style="padding: 0px; border:none;">
+                    <div class="card-body bg-white ">
+                        <div class="card-deck ">
+                            @foreach (var item in Model)
+                            {
+
+                                <div class=" col-xl-3 col-lg-3 col-md-4 col-sm-6 shadow" style="margin-bottom: 40px;">
+                                    <div class=" card list-book rounded shadow" style="color: black; font-family: 'Courier New'; min-height: 605px; ">
+                                        <a asp-controller="SanPham" asp-action="Details" asp-route-id="@item.Id">
+                                            <img src="~/images/@Html.DisplayFor(modelItem => item.HinhAnhBia)" style="max-width:100%" />
+                                        </a>
+                                        <div class="card-body al shadow">
+                                            <h6 class="card-title text-center" style="font-size:15px">@item.TenSach</h6>
+                                            <p class="card-text text-center" style="color: red; font-weight: bold; font-family: 'Courier New'">Giá:@String.Format("{0:N0}", item.DonGia - (item.DonGia * 10 / 100)) VNĐ</p>
+                                            <p class="card-text text-center" style="color: red; font-weight: bold; font-family: 'Courier New'; text-decoration:line-through;color:#aaa;margin-top: -20px">Giá:@String.Format("{0:N0}", item.DonGia) VNĐ</p>
+                                        </div>
+                                        <div class="card-footer text-center list-book button-buy">
+                                            <a class="btn btn-outline-danger" asp-controller="Home" asp-action="AddToCart" asp-route-id="@item.Id">
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                            <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-primary">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination  justify-content-center">
+                @{
+                    int numberPage = ViewBag.numberPage;
+                    int pageCurrent = ViewBag.pageCurrent;
+                    int offset = 2;//number display page
+
+
+                    //config FirstLink
+                    if (pageCurrent > 1)
+                    {
+                        int prevPage = pageCurrent - 1;
+                        var PrevLink = new Dictionary<string, string> { { "page", prevPage.ToString() } };
+                        <li class="page-item"><a class="page-link" asp-controller="VanHocNgheThuat" asp-action="Index" asp-all-route-data="PrevLink">Trước</a></li>
+                    }
+
+                    int from = pageCurrent - offset;
+                    int to = pageCurrent + offset;
+                    if (from <= 0)
+                    {
+                        from = 1;
+                        to = offset * 2;
+                    }
+
+
+                    if (to > numberPage)
+                    {
+                        to = numberPage;
+                    }
+
+                    int i;
+                    for (i = from; i <= to; i++)
+                    {
+                        var parms = new Dictionary<string, string>
+                                                                                                {
+                        { "page",i.ToString()}
+                    };
+                        if (pageCurrent == i)
+                        {
+                            <li class="page-item active "><a class="page-link" asp-controller="VanHocNgheThuat" asp-action="Index" asp-all-route-data="parms">@i</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item  "><a class="page-link" asp-controller="VanHocNgheThuat" asp-action="Index" asp-all-route-data="parms">@i</a></li>
+                        }
+
+                    }
+
+                    if (pageCurrent < numberPage - (to / 2))
+                    {
+                        <li><a>...</a></li>
+                        var LastLink = new Dictionary<string, string> { { "page", numberPage.ToString() } };
+                        <li class="page-item"><a class="page-link" asp-controller="VanHocNgheThuat" asp-action="Index" asp-all-route-data="LastLink">Last Link</a></li>
+                    }
+
+                    if (pageCurrent < numberPage)
+                    {
+                        int nextPage = pageCurrent + 1;
+                        var NextLink = new Dictionary<string, string> { { "page", nextPage.ToString() } };
+                        <li class="page-item"><a class="page-link" asp-controller="VanHocNgheThuat" asp-action="Index" asp-all-route-data="NextLink">Tiếp</a></li>
+                    }
+                }
+            </ul>
+
+        </nav>
+    </header>
+</body>

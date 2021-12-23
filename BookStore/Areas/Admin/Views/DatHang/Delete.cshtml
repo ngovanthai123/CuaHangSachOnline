@@ -1,0 +1,56 @@
+﻿@model BookStore.Models.DatHang
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2 style="font-weight:bold">Bạn đã chắc là muốn xóa chứ???</h2>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DienThoaiGiaoHang)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DienThoaiGiaoHang)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DiaChiGiaoHang)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DiaChiGiaoHang)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NgayDatHang)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NgayDatHang)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TinhTrang)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TinhTrang)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KhachHang)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KhachHang.HoVaTen)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NhanVien)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NhanVien.HoVaTen)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Xác nhận xóa" class="btn btn-danger" /> |
+        <a asp-action="Index">Quay về danh sách</a>
+    </form>
+</div>
+
